@@ -7,6 +7,7 @@ const Home = () => {
   const [userInput, setUserInput] = useState("");
   const [apiOutput, setApiOutput] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
 
   const callGenerateEndpoint = async () => {
     setIsGenerating(true);
@@ -27,26 +28,52 @@ const Home = () => {
     setApiOutput(`${output.text}`);
     setIsGenerating(false);
   };
+
+  const handleEmailSubmit = (e) => {
+    e.preventDefault();
+    console.log("User Email:", userEmail);
+    // You can store the email in your preferred data store or state management tool
+  };
+
   const onUserChangedText = (event) => {
     console.log(event.target.value);
     setUserInput(event.target.value);
   };
+
+  const onEmailChangedText = (event) => {
+    console.log(event.target.value);
+    setUserEmail(event.target.value);
+  };
+
   return (
     <div className="root">
       <Head>
-        <title>GPT-3 Writer</title>
+        <title>AI Campaign Generator</title>
       </Head>
       <div className="container">
         <div className="header">
           <div className="header-title">
-            <h1>devs, get ready to level up!</h1>
+            <h1>Empowering Non-Profits with AI-Powered Campaigns!</h1>
           </div>
           <div className="header-subtitle">
-            <h2>step-by-step guide: mastering the latest tech in no time!</h2>
+            <h2>Generate Impactful Campaigns in Minutes with Our Web App</h2>
           </div>
         </div>
       </div>
       <div className="prompt-container">
+        <form onSubmit={handleEmailSubmit}>
+          <input
+            type="email"
+            placeholder="Enter your email"
+            className="email-input"
+            value={userEmail}
+            onChange={onEmailChangedText}
+          />
+          <button type="submit" className="email-submit">
+            Next
+          </button>
+        </form>
+
         <textarea
           placeholder="wanna be a tech ninja? let's do this! 🤓"
           className="prompt-box"
