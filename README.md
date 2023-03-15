@@ -1,11 +1,17 @@
-# Unleash Your Inner Developer
-## Get the inside scoop on the latest tools and tricks to help you code like a boss.
-Welcome to the ultimate guide to becoming a tech ninja! Whether you're a beginner or a seasoned coder, this guide will help you master the latest tech and unleash your full potential as a developer.
+# Empowering Non-Profits with AI-Powered Campaigns
 
-### Follow these simple steps to get started:
+## Generate impactful campaigns in minutes with our web app
 
-Choose the tech you'd like to learn.
-Read through the guide to get an overview of the tools and techniques you'll need to master.
-Practice, practice, practice! The more you code, the better you'll get.
-Stay up to date with the latest advancements in technology by following industry leaders and attending events and workshops.
-So what are you waiting for? It's time to unleash your inner developer and code like a boss! 🤓
+Welcome to our AI-powered campaign generator! Our web app is designed to help non-profits create campaigns that make a real impact. Whether you're a small non-profit just starting out, or a larger organization looking for new ideas, our generator can help you develop campaigns that connect with your audience and achieve your goals.
+
+### Here's how it works:
+
+Enter your email to get started
+Input your company details
+Let our AI generate campaign ideas for you
+Edit and customize the generated content to fit your specific needs
+Launch your campaign and make a difference!
+
+With our easy-to-use interface and powerful AI technology, you'll be able to generate multiple campaign ideas in minutes. Plus, with the ability to edit and customize the generated content, you can ensure that your campaign is a perfect fit for your organization.
+
+So what are you waiting for? Sign up now and start empowering your non-profit with AI-powered campaigns! 🤖
