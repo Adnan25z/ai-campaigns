@@ -17,7 +17,7 @@ const Home = () => {
   const goToNextStep = () => {
     setCurrentAction(currentAction + 1);
   };
-  
+
   const callGenerateEndpoint = async () => {
     setIsGenerating(true);
 
@@ -28,7 +28,11 @@ const Home = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        prompt: `Email: ${email}\nLocation: ${location}\nNon-profit Name: ${nonProfitName}\nRevenue Range: ${revenueRange}\nPurpose: ${purpose}\n`,
+        email: `${email}`,
+        location: `${location}`,
+        name: `${nonProfitName}`,
+        revenue: `${revenueRange}`,
+        purpose: `${purpose}`,
       }),
     });
 
@@ -45,7 +49,7 @@ const Home = () => {
     setUserInput(event.target.value);
   };
 
-  return(
+  return (
     <div className="root">
       <Head>
         <title>GPT-3 Writer</title>
@@ -60,7 +64,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-  
+
       {currentAction === 1 && (
         <div className="prompt-container">
           <label htmlFor="user-input-email" className="prompt-label">
@@ -80,7 +84,7 @@ const Home = () => {
           </div>
         </div>
       )}
-  
+
       {currentAction === 2 && (
         <div className="prompt-container">
           <label htmlFor="user-input-location" className="prompt-label">
@@ -100,7 +104,7 @@ const Home = () => {
           </div>
         </div>
       )}
-  
+
       {currentAction === 3 && (
         <div className="prompt-container">
           <label htmlFor="user-input-nonprofit" className="prompt-label">
@@ -119,80 +123,91 @@ const Home = () => {
             </a>
           </div>
         </div>
-    )}
+      )}
 
-    {currentAction === 4 && (
-      <div className="prompt-container">
-        <label htmlFor="user-input-range" className="prompt-label">
-          Revenue Range:
-        </label>
-        <input
-          placeholder="enter your revenue range 🌍"
-          id="user-input-range"
-          className="prompt-box"
-          value={revenueRange}
-          onChange={(e) => setRevenueRange(e.target.value)}
-        />
-        <div className="prompt-buttons">
-          <a className="generate-button" onClick={goToNextStep}>
-            Next
-          </a>
+      {currentAction === 4 && (
+        <div className="prompt-container">
+          <label htmlFor="user-input-range" className="prompt-label">
+            Revenue Range:
+          </label>
+          <input
+            placeholder="enter your revenue range 🌍"
+            id="user-input-range"
+            className="prompt-box"
+            value={revenueRange}
+            onChange={(e) => setRevenueRange(e.target.value)}
+          />
+          <div className="prompt-buttons">
+            <a className="generate-button" onClick={goToNextStep}>
+              Next
+            </a>
+          </div>
         </div>
-      </div>
-    )}
+      )}
 
-    {currentAction === 5 && (
-      <div className="prompt-container">
-        <label htmlFor="user-input-purpose" className="prompt-label">
-          Purpose:
-        </label>
-        <input
-          placeholder="enter your purpose 🌍"
-          id="user-input-purpose"
-          className="prompt-box"
-          value={purpose}
-          onChange={(e) => setPurpose(e.target.value)}
-        />
-        <div className="prompt-buttons">
-          <a className="generate-button" onClick={goToNextStep}>
-            Next
-          </a>
+      {currentAction === 5 && (
+        <div className="prompt-container">
+          <label htmlFor="user-input-purpose" className="prompt-label">
+            Purpose:
+          </label>
+          <input
+            placeholder="enter your purpose 🌍"
+            id="user-input-purpose"
+            className="prompt-box"
+            value={purpose}
+            onChange={(e) => setPurpose(e.target.value)}
+          />
+          <div className="prompt-buttons">
+            <a className="generate-button" onClick={goToNextStep}>
+              Next
+            </a>
+          </div>
         </div>
-      </div>
-    )}
+      )}
 
-    {currentAction === 6 && (
-      <div className="prompt-container">
-        <label htmlFor="user-input" className="prompt-label">
-          Enter your thoughts:
-        </label>
-        <textarea
-          placeholder="enter your thoughts here 🤔"
-          id="user-input"
-          className="prompt-box"
-          value={userInput}
-          onChange={onUserChangedText}
-        />
-        <div className="prompt-buttons">
-          <a className="generate-button" onClick={callGenerateEndpoint}>
-            Generate
-          </a>
+      {currentAction === 6 && (
+        <div className="prompt-container">
+          <label htmlFor="user-input" className="prompt-label">
+            Enter your thoughts:
+          </label>
+          <textarea
+            placeholder="enter your thoughts here 🤔"
+            id="user-input"
+            className="prompt-box"
+            value={userInput}
+            onChange={onUserChangedText}
+          />
+          <div className="prompt-buttons">
+            <a
+              className={
+                isGenerating ? "generate-button loading" : "generate-button"
+              }
+              onClick={callGenerateEndpoint}
+            >
+              <div className="generate">
+                {isGenerating ? (
+                  <span className="loader"></span>
+                ) : (
+                  <p>Generate</p>
+                )}
+              </div>
+            </a>
+          </div>
         </div>
-      </div>
-    )}
+      )}
 
-    {isGenerating && (
-      <div className="loading-container">
-        <p>Generating AI text...</p>
-      </div>
-    )}
-
-    {!isGenerating && apiOutput && (
-      <div className="output-container">
-        <h2>Generated AI text:</h2>
-        <p>{apiOutput}</p>
-      </div>
-    )}
+      {!isGenerating && apiOutput && (
+        <div className="output">
+          <div className="output-header-container">
+            <div className="output-header">
+              <h3>Output</h3>
+            </div>
+          </div>
+          <div className="output-content">
+            <p>{apiOutput}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
