@@ -49,21 +49,40 @@ const Home = () => {
         </div>
       </div>
       <div className="prompt-container">
-        <label htmlFor="user-input-email" className="prompt-label">
-          Email Address:
-        </label>
         <input
           placeholder="enter your email 🤓"
-          id="user-input-email"
           className="prompt-box"
           value={userInput}
           onChange={onUserChangedText}
         />
         <div className="prompt-buttons">
-          <a className="generate-button" onClick={callGenerateEndpoint}>
-            Next
+          <a
+            className={
+              isGenerating ? "generate-button loading" : "generate-button"
+            }
+            onClick={callGenerateEndpoint}
+          >
+            <div className="generate">
+              {isGenerating ? (
+                <span className="loader"></span>
+              ) : (
+                <p>Generate</p>
+              )}
+            </div>
           </a>
         </div>
+        {apiOutput && (
+          <div className="output">
+            <div className="output-header-container">
+              <div className="output-header">
+                <h3>Output</h3>
+              </div>
+            </div>
+            <div className="output-content">
+              <p>{apiOutput}</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -68,7 +68,6 @@ body {
 
 .prompt-container {
     place-content: flex-end center;
-    align-items: center;
     display: flex;
     flex: 0 0 auto;
     flex-flow: column nowrap;
@@ -76,6 +75,15 @@ body {
     height: min-content;
     padding: 0px;
     width: min-content;
+}
+
+.prompt-label {
+    display: block;
+    font-size: 16px;
+    padding-left: 1rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: rgba(255, 255, 255, 0.75);
 }
 
 .prompt-box {
@@ -93,11 +101,10 @@ body {
     flex: 0 0 auto;
     flex-flow: column nowrap;
     gap: 10px;
-    height: 150px;
+    width: 600px;
     overflow: hidden;
     padding: 20px;
     position: relative;
-    width: 610px;
     max-width: 1200px;
     will-change: transform;
     overflow: auto;
@@ -121,6 +128,7 @@ textarea {
 .prompt-box:focus {
     border-color:rgba(255, 255, 255, 0.75)
 }
+
 
 
 .prompt-buttons {
