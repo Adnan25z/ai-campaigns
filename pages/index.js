@@ -17,7 +17,7 @@ const Home = () => {
   const goToNextStep = () => {
     setCurrentAction(currentAction + 1);
   };
-
+  
   const callGenerateEndpoint = async () => {
     setIsGenerating(true);
 
@@ -45,7 +45,7 @@ const Home = () => {
     setUserInput(event.target.value);
   };
 
-  return (
+  return(
     <div className="root">
       <Head>
         <title>GPT-3 Writer</title>
@@ -102,63 +102,97 @@ const Home = () => {
       )}
   
       {currentAction === 3 && (
-            <div className="prompt-container">
-              <label htmlFor="user-input-nonprofit" className="prompt-label">
-                Location:
-              </label>
-              <input
-                placeholder="enter your organisation name 🌍"
-                id="user-input-nonprofit"
-                className="prompt-box"
-                value={nonProfitName}
-                onChange={(e) => setNonProfitName(e.target.value)}
-              />
-              <div className="prompt-buttons">
-                <a className="generate-button" onClick={goToNextStep}>
-                  Next
-                </a>
-              </div>
-            </div>
-          )}
-       {currentAction === 4 && (
-            <div className="prompt-container">
-              <label htmlFor="user-input-range" className="prompt-label">
-                Location:
-              </label>
-              <input
-                placeholder="enter your range 🌍"
-                id="user-input-range"
-                className="prompt-box"
-                value={revenueRange}
-                onChange={(e) => setRevenueRange(e.target.value)}
-              />
-              <div className="prompt-buttons">
-                <a className="generate-button" onClick={goToNextStep}>
-                  Next
-                </a>
-              </div>
-            </div>
-          )}
+        <div className="prompt-container">
+          <label htmlFor="user-input-nonprofit" className="prompt-label">
+            Non-profit Name:
+          </label>
+          <input
+            placeholder="enter your non-profit name 🌍"
+            id="user-input-nonprofit"
+            className="prompt-box"
+            value={nonProfitName}
+            onChange={(e) => setNonProfitName(e.target.value)}
+          />
+          <div className="prompt-buttons">
+            <a className="generate-button" onClick={goToNextStep}>
+              Next
+            </a>
+          </div>
+        </div>
+    )}
 
-{currentAction === 5 && (
-            <div className="prompt-container">
-              <label htmlFor="user-input-purpose" className="prompt-label">
-                Location:
-              </label>
-              <input
-                placeholder="enter your purpose 🌍"
-                id="user-input-purpose"
-                className="prompt-box"
-                value={purpose}
-                onChange={(e) => setPurpose(e.target.value)}
-              />
-              <div className="prompt-buttons">
-                <a className="generate-button" onClick={goToNextStep}>
-                  Next
-                </a>
-              </div>
-            </div>
-          )}      
+    {currentAction === 4 && (
+      <div className="prompt-container">
+        <label htmlFor="user-input-range" className="prompt-label">
+          Revenue Range:
+        </label>
+        <input
+          placeholder="enter your revenue range 🌍"
+          id="user-input-range"
+          className="prompt-box"
+          value={revenueRange}
+          onChange={(e) => setRevenueRange(e.target.value)}
+        />
+        <div className="prompt-buttons">
+          <a className="generate-button" onClick={goToNextStep}>
+            Next
+          </a>
+        </div>
+      </div>
+    )}
+
+    {currentAction === 5 && (
+      <div className="prompt-container">
+        <label htmlFor="user-input-purpose" className="prompt-label">
+          Purpose:
+        </label>
+        <input
+          placeholder="enter your purpose 🌍"
+          id="user-input-purpose"
+          className="prompt-box"
+          value={purpose}
+          onChange={(e) => setPurpose(e.target.value)}
+        />
+        <div className="prompt-buttons">
+          <a className="generate-button" onClick={goToNextStep}>
+            Next
+          </a>
+        </div>
+      </div>
+    )}
+
+    {currentAction === 6 && (
+      <div className="prompt-container">
+        <label htmlFor="user-input" className="prompt-label">
+          Enter your thoughts:
+        </label>
+        <textarea
+          placeholder="enter your thoughts here 🤔"
+          id="user-input"
+          className="prompt-box"
+          value={userInput}
+          onChange={onUserChangedText}
+        />
+        <div className="prompt-buttons">
+          <a className="generate-button" onClick={callGenerateEndpoint}>
+            Generate
+          </a>
+        </div>
+      </div>
+    )}
+
+    {isGenerating && (
+      <div className="loading-container">
+        <p>Generating AI text...</p>
+      </div>
+    )}
+
+    {!isGenerating && apiOutput && (
+      <div className="output-container">
+        <h2>Generated AI text:</h2>
+        <p>{apiOutput}</p>
+      </div>
+    )}
     </div>
   );
 };
