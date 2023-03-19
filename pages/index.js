@@ -10,15 +10,18 @@ const Home = () => {
   const [revenueRange, setRevenueRange] = useState("");
   const [purpose, setPurpose] = useState("");
   const [currentAction, setCurrentAction] = useState(1); // starts at step 1
-  const [userInput, setUserInput] = useState("");
   const [apiOutput, setApiOutput] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isCampaignGenerating, setCampaignIsGenerating] = useState(false);
   const [activities, setActivities] = useState("");
+
+  const [goal, setGoal] = useState("");
+  const [duration, setDuration] = useState("");
+  const [channelType, setChannelType] = useState("");
+  const [focus, setFocus] = useState("");
+
   // added a new state variable to store the updated output
   const [updatedApiOutput, setUpdatedApiOutput] = useState("");
-  // added a new state variable to store the updated user input
-  const [updatedUserInput, setUpdatedUserInput] = useState("");
-
 
   const goToNextStep = () => {
     setCurrentAction(currentAction + 1);
@@ -53,22 +56,20 @@ const Home = () => {
 
   // add a new function to call the OpenAI API with updated inputs
   const callUpdateEndpoint = async () => {
-    setIsGenerating(true);
+    setCampaignIsGenerating(true);
 
     console.log("Calling OpenAI with updated inputs...");
-    const response = await fetch("/api/generate", {
+    const response = await fetch("/api/generateSecond", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: `${email}`,
-        location: `${location}`,
-        name: `${nonProfitName}`,
-        revenue: `${revenueRange}`,
-        purpose: `${purpose}`,
-        activities: `${activities}`,
-        userInput: `${userInput}${updatedUserInput}`,
+        context: `${apiOutput}`,
+        goal: `${goal}`,
+        duration: `${duration}`,
+        channelType: `${channelType}`,
+        focus: `${focus}`,
       }),
     });
 
@@ -77,19 +78,8 @@ const Home = () => {
     console.log("OpenAI replied with updated output...", output.text);
 
     setUpdatedApiOutput(`${output.text}`);
-    setIsGenerating(false);
+    setCampaignIsGenerating(false);
   };
-
-  // add a new event handler for the updated input
-  const onUpdatedUserChangedText = (event) => {
-    console.log(event.target.value);
-    setUpdatedUserInput(event.target.value);
-  };
-
-  //const onUserChangedText = (event) => {
-  //  console.log(event.target.value);
-  //  setUserInput(event.target.value);
-  //};
 
   return (
     <div className="root">
@@ -238,33 +228,6 @@ const Home = () => {
         </div>
       )}
 
-      {currentAction === 7 && (
-        <div className="prompt-container">
-          <label htmlFor="user-input-updated" className="prompt-label">
-            Additional thoughts:
-          </label>
-          <textarea
-            placeholder="Feel free to update here 🤔"
-            id="user-input-updated"
-            className="prompt-box"
-            value={updatedUserInput}
-            onChange={onUpdatedUserChangedText}
-          />
-          <div className="prompt-buttons">
-            <a className="generate-button" onClick={callUpdateEndpoint}>
-              Create a Campaign
-            </a>
-          </div>
-        </div>
-      )}
-
-      {updatedApiOutput && (
-        <div className="output-container">
-          <h3>Updated Output:</h3>
-          <p className="output-text">{updatedApiOutput}</p>
-        </div>
-      )}
-
       {!isGenerating && apiOutput && (
         <div className="output">
           <div className="output-header-container">
@@ -275,9 +238,118 @@ const Home = () => {
           <div className="output-content">
             <p>{apiOutput}</p>
           </div>
+          <div className="prompt-buttons">
+            <a className="generate-button" onClick={goToNextStep}>
+              Create a Campaign
+            </a>
+          </div>
         </div>
       )}
-    </div>  
-  );  
+
+      {currentAction === 7 && (
+        <div className="prompt-container">
+          <label htmlFor="user-input-goal" className="prompt-label">
+            Goal:
+          </label>
+          <textarea
+            placeholder="your goal 🤔"
+            id="user-input-goal"
+            className="prompt-box"
+            value={goal}
+            onChange={(e) => setGoal(e.target.value)}
+          />
+          <div className="prompt-buttons">
+            <a className="generate-button" onClick={goToNextStep}>
+              Next
+            </a>
+          </div>
+        </div>
+      )}
+
+      {currentAction === 8 && (
+        <div className="prompt-container">
+          <label htmlFor="user-input-duration" className="prompt-label">
+            Duration:
+          </label>
+          <textarea
+            placeholder="your duration 🤔"
+            id="user-input-duration"
+            className="prompt-box"
+            value={duration}
+            onChange={(e) => setDuration(e.target.value)}
+          />
+          <div className="prompt-buttons">
+            <a className="generate-button" onClick={goToNextStep}>
+              Next
+            </a>
+          </div>
+        </div>
+      )}
+
+      {currentAction === 9 && (
+        <div className="prompt-container">
+          <label htmlFor="user-input-channel" className="prompt-label">
+            Channel Type:
+          </label>
+          <textarea
+            placeholder="your channel 🤔"
+            id="user-input-channel"
+            className="prompt-box"
+            value={duration}
+            onChange={(e) => setDuration(e.target.value)}
+          />
+          <div className="prompt-buttons">
+            <a className="generate-button" onClick={goToNextStep}>
+              Next
+            </a>
+          </div>
+        </div>
+      )}
+
+      {currentAction === 10 && (
+        <div className="prompt-container">
+          <label htmlFor="user-input-focus" className="prompt-label">
+            Focus:
+          </label>
+          <textarea
+            placeholder="your focus 🤔"
+            id="user-input-focus"
+            className="prompt-box"
+            value={focus}
+            onChange={(e) => setFocus(e.target.value)}
+          />
+          <div className="prompt-buttons">
+            <a
+              className={
+                isGenerating ? "generate-button loading" : "generate-button"
+              }
+              onClick={callUpdateEndpoint}
+            >
+              <div className="generate">
+                {isGenerating ? (
+                  <span className="loader"></span>
+                ) : (
+                  <p>Submit</p>
+                )}
+              </div>
+            </a>
+          </div>
+        </div>
+      )}
+
+      {!isGenerating && updatedApiOutput && (
+        <div className="output">
+          <div className="output-header-container">
+            <div className="output-header">
+              <h3>Campaigns Generated</h3>
+            </div>
+          </div>
+          <div className="output-content">
+            <p>{updatedApiOutput}</p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 export default Home;
