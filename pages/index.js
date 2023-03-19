@@ -1,4 +1,6 @@
 import Head from "next/head";
+import Image from "next/image";
+import buildspaceLogo from "../assets/buildspace-logo.png";
 import { useState } from "react";
 
 const Home = () => {
@@ -8,9 +10,15 @@ const Home = () => {
   const [revenueRange, setRevenueRange] = useState("");
   const [purpose, setPurpose] = useState("");
   const [currentAction, setCurrentAction] = useState(1); // starts at step 1
+  const [userInput, setUserInput] = useState("");
   const [apiOutput, setApiOutput] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [activities, setActivities] = useState("");
+  // added a new state variable to store the updated output
+  const [updatedApiOutput, setUpdatedApiOutput] = useState("");
+  // added a new state variable to store the updated user input
+  const [updatedUserInput, setUpdatedUserInput] = useState("");
+
 
   const goToNextStep = () => {
     setCurrentAction(currentAction + 1);
@@ -42,6 +50,46 @@ const Home = () => {
     setApiOutput(`${output.text}`);
     setIsGenerating(false);
   };
+
+  // add a new function to call the OpenAI API with updated inputs
+  const callUpdateEndpoint = async () => {
+    setIsGenerating(true);
+
+    console.log("Calling OpenAI with updated inputs...");
+    const response = await fetch("/api/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: `${email}`,
+        location: `${location}`,
+        name: `${nonProfitName}`,
+        revenue: `${revenueRange}`,
+        purpose: `${purpose}`,
+        activities: `${activities}`,
+        userInput: `${userInput}${updatedUserInput}`,
+      }),
+    });
+
+    const data = await response.json();
+    const { output } = data;
+    console.log("OpenAI replied with updated output...", output.text);
+
+    setUpdatedApiOutput(`${output.text}`);
+    setIsGenerating(false);
+  };
+
+  // add a new event handler for the updated input
+  const onUpdatedUserChangedText = (event) => {
+    console.log(event.target.value);
+    setUpdatedUserInput(event.target.value);
+  };
+
+  //const onUserChangedText = (event) => {
+  //  console.log(event.target.value);
+  //  setUserInput(event.target.value);
+  //};
 
   return (
     <div className="root">
@@ -190,6 +238,33 @@ const Home = () => {
         </div>
       )}
 
+      {currentAction === 7 && (
+        <div className="prompt-container">
+          <label htmlFor="user-input-updated" className="prompt-label">
+            Additional thoughts:
+          </label>
+          <textarea
+            placeholder="Feel free to update here 🤔"
+            id="user-input-updated"
+            className="prompt-box"
+            value={updatedUserInput}
+            onChange={onUpdatedUserChangedText}
+          />
+          <div className="prompt-buttons">
+            <a className="generate-button" onClick={callUpdateEndpoint}>
+              Create a Campaign
+            </a>
+          </div>
+        </div>
+      )}
+
+      {updatedApiOutput && (
+        <div className="output-container">
+          <h3>Updated Output:</h3>
+          <p className="output-text">{updatedApiOutput}</p>
+        </div>
+      )}
+
       {!isGenerating && apiOutput && (
         <div className="output">
           <div className="output-header-container">
@@ -202,8 +277,7 @@ const Home = () => {
           </div>
         </div>
       )}
-    </div>
-  );
+    </div>  
+  );  
 };
-
 export default Home;
