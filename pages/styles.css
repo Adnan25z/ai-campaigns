@@ -327,7 +327,14 @@ textarea {
     flex-shrink: 0;
     transform: none;
 }
-
+.campaign {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .output-content p {
     text-align: center;
     white-space: pre-line;

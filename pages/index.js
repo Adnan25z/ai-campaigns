@@ -22,6 +22,12 @@ const Home = () => {
   const [updatedApiOutput, setUpdatedApiOutput] = useState("");
 
   const goToNextStep = () => {
+    const link = document.querySelector(".campaign a");
+
+    if (link !== null) {
+      link.remove();
+    }
+
     setCurrentAction(currentAction + 1);
   };
 
