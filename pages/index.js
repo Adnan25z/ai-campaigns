@@ -195,7 +195,7 @@ const Home = () => {
         </div>
       )}
 
-      {currentAction === 6 && (
+      {!apiOutput && currentAction === 6 && (
         <div className="prompt-container">
           <label htmlFor="user-input" className="prompt-label">
             Current activities of the non-profit:
@@ -230,14 +230,14 @@ const Home = () => {
         <div className="output">
           <div className="output-header-container">
             <div className="output-header">
-              <h3>Output</h3>
+              <h3>Details of your Organisation</h3>
             </div>
           </div>
           <div className="output-content">
             <p>{apiOutput}</p>
           </div>
-          <div className="prompt-buttons">
-            <a className="generate-button" onClick={goToNextStep}>
+          <div className="prompt-buttons campaign">
+            <a className="generate-button campaign" onClick={goToNextStep}>
               Create a Campaign
             </a>
           </div>
