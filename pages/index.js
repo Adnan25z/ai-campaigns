@@ -4,9 +4,19 @@ import buildspaceLogo from "../assets/buildspace-logo.png";
 import { useState } from "react";
 
 const Home = () => {
+  const [email, setEmail] = useState("");
+  const [location, setLocation] = useState("");
+  const [nonProfitName, setNonProfitName] = useState("");
+  const [revenueRange, setRevenueRange] = useState("");
+  const [purpose, setPurpose] = useState("");
+  const [currentAction, setCurrentAction] = useState(1); // starts at step 1
   const [userInput, setUserInput] = useState("");
   const [apiOutput, setApiOutput] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+
+  const goToNextStep = () => {
+    setCurrentAction(currentAction + 1);
+  };
 
   const callGenerateEndpoint = async () => {
     setIsGenerating(true);
@@ -17,7 +27,9 @@ const Home = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userInput }),
+      body: JSON.stringify({
+        prompt: `Email: ${email}\nLocation: ${location}\nNon-profit Name: ${nonProfitName}\nRevenue Range: ${revenueRange}\nPurpose: ${purpose}\n`,
+      }),
     });
 
     const data = await response.json();
@@ -48,23 +60,105 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="prompt-container">
-        <label htmlFor="user-input-email" className="prompt-label">
-          Email Address:
-        </label>
-        <input
-          placeholder="enter your email 🤓"
-          id="user-input-email"
-          className="prompt-box"
-          value={userInput}
-          onChange={onUserChangedText}
-        />
-        <div className="prompt-buttons">
-          <a className="generate-button" onClick={callGenerateEndpoint}>
-            Next
-          </a>
+  
+      {currentAction === 1 && (
+        <div className="prompt-container">
+          <label htmlFor="user-input-email" className="prompt-label">
+            Email Address:
+          </label>
+          <input
+            placeholder="enter your email 🤓"
+            id="user-input-email"
+            className="prompt-box"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <div className="prompt-buttons">
+            <a className="generate-button" onClick={goToNextStep}>
+              Next
+            </a>
+          </div>
         </div>
-      </div>
+      )}
+  
+      {currentAction === 2 && (
+        <div className="prompt-container">
+          <label htmlFor="user-input-location" className="prompt-label">
+            Location:
+          </label>
+          <input
+            placeholder="enter your location 🌍"
+            id="user-input-location"
+            className="prompt-box"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+          />
+          <div className="prompt-buttons">
+            <a className="generate-button" onClick={goToNextStep}>
+              Next
+            </a>
+          </div>
+        </div>
+      )}
+  
+      {currentAction === 3 && (
+            <div className="prompt-container">
+              <label htmlFor="user-input-nonprofit" className="prompt-label">
+                Location:
+              </label>
+              <input
+                placeholder="enter your organisation name 🌍"
+                id="user-input-nonprofit"
+                className="prompt-box"
+                value={nonProfitName}
+                onChange={(e) => setNonProfitName(e.target.value)}
+              />
+              <div className="prompt-buttons">
+                <a className="generate-button" onClick={goToNextStep}>
+                  Next
+                </a>
+              </div>
+            </div>
+          )}
+       {currentAction === 4 && (
+            <div className="prompt-container">
+              <label htmlFor="user-input-range" className="prompt-label">
+                Location:
+              </label>
+              <input
+                placeholder="enter your range 🌍"
+                id="user-input-range"
+                className="prompt-box"
+                value={revenueRange}
+                onChange={(e) => setRevenueRange(e.target.value)}
+              />
+              <div className="prompt-buttons">
+                <a className="generate-button" onClick={goToNextStep}>
+                  Next
+                </a>
+              </div>
+            </div>
+          )}
+
+{currentAction === 5 && (
+            <div className="prompt-container">
+              <label htmlFor="user-input-purpose" className="prompt-label">
+                Location:
+              </label>
+              <input
+                placeholder="enter your purpose 🌍"
+                id="user-input-purpose"
+                className="prompt-box"
+                value={purpose}
+                onChange={(e) => setPurpose(e.target.value)}
+              />
+              <div className="prompt-buttons">
+                <a className="generate-button" onClick={goToNextStep}>
+                  Next
+                </a>
+              </div>
+            </div>
+          )}      
     </div>
   );
 };
