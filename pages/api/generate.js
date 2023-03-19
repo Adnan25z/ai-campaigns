@@ -11,18 +11,18 @@ const basePromptMiddle = " and I work for ";
 const basePromptMiddleOne = " which generates ";
 const basePromptMiddleTwo =
   " in revenue.  The purpose of the non-profit organization is ";
-const basePromptMiddleThree = ". generate a sms campaign for me.";
+const basePromptMiddleThree = ". Currently my organization does ";
 const generateAction = async (req, res) => {
   // Run first prompt
   console.log(
-    `API: ${basePromptPrefix}${req.body.location}${basePromptMiddle}${req.body.name}${basePromptMiddleOne}${req.body.revenue}${basePromptMiddleTwo}${req.body.purpose}`
+    `API: ${basePromptPrefix}${req.body.location}${basePromptMiddle}${req.body.name}${basePromptMiddleOne}${req.body.revenue}${basePromptMiddleTwo}${req.body.purpose}${basePromptMiddleThree}${req.body.activities}`
   );
 
   const baseCompletion = await openai.createCompletion({
     model: "text-davinci-003",
-    prompt: `${basePromptPrefix}${req.body.location}${basePromptMiddle}${req.body.name}${basePromptMiddleOne}${req.body.revenue}${basePromptMiddleTwo}${req.body.purpose}`,
-    temperature: 0.7,
-    max_tokens: 300,
+    prompt: `${basePromptPrefix}${req.body.location}${basePromptMiddle}${req.body.name}${basePromptMiddleOne}${req.body.revenue}${basePromptMiddleTwo}${req.body.purpose}${basePromptMiddleThree}${req.body.activities}`,
+    temperature: 0.8,
+    max_tokens: 250,
   });
 
   const basePromptOutput = baseCompletion.data.choices.pop();

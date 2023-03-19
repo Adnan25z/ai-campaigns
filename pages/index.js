@@ -1,6 +1,4 @@
 import Head from "next/head";
-import Image from "next/image";
-import buildspaceLogo from "../assets/buildspace-logo.png";
 import { useState } from "react";
 
 const Home = () => {
@@ -10,9 +8,9 @@ const Home = () => {
   const [revenueRange, setRevenueRange] = useState("");
   const [purpose, setPurpose] = useState("");
   const [currentAction, setCurrentAction] = useState(1); // starts at step 1
-  const [userInput, setUserInput] = useState("");
   const [apiOutput, setApiOutput] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+  const [activities, setActivities] = useState("");
 
   const goToNextStep = () => {
     setCurrentAction(currentAction + 1);
@@ -33,6 +31,7 @@ const Home = () => {
         name: `${nonProfitName}`,
         revenue: `${revenueRange}`,
         purpose: `${purpose}`,
+        activities: `${activities}`,
       }),
     });
 
@@ -42,11 +41,6 @@ const Home = () => {
 
     setApiOutput(`${output.text}`);
     setIsGenerating(false);
-  };
-
-  const onUserChangedText = (event) => {
-    console.log(event.target.value);
-    setUserInput(event.target.value);
   };
 
   return (
@@ -168,14 +162,14 @@ const Home = () => {
       {currentAction === 6 && (
         <div className="prompt-container">
           <label htmlFor="user-input" className="prompt-label">
-            Enter your thoughts:
+            Current activities of the non-profit:
           </label>
           <textarea
-            placeholder="enter your thoughts here 🤔"
+            placeholder="enter your current activities here 🤔"
             id="user-input"
             className="prompt-box"
-            value={userInput}
-            onChange={onUserChangedText}
+            value={activities}
+            onChange={(e) => setActivities(e.target.value)}
           />
           <div className="prompt-buttons">
             <a
