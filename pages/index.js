@@ -124,7 +124,7 @@ const Home = () => {
       {currentAction === 2 && (
         <div className="prompt-container">
           <label htmlFor="user-input-location" className="prompt-label">
-            Location:
+            Company's Location:
           </label>
           <input
             placeholder="enter your location 🌍"
@@ -144,7 +144,7 @@ const Home = () => {
       {currentAction === 3 && (
         <div className="prompt-container">
           <label htmlFor="user-input-nonprofit" className="prompt-label">
-            Non-profit Name:
+            Your non-profit name:
           </label>
           <input
             placeholder="enter your non-profit name 🌍"
@@ -164,7 +164,7 @@ const Home = () => {
       {currentAction === 4 && (
         <div className="prompt-container">
           <label htmlFor="user-input-range" className="prompt-label">
-            Revenue Range:
+            Your Annual Revenue:
           </label>
           <input
             placeholder="enter your revenue range 🌍"
@@ -184,7 +184,7 @@ const Home = () => {
       {currentAction === 5 && (
         <div className="prompt-container">
           <label htmlFor="user-input-purpose" className="prompt-label">
-            Purpose:
+            Your organization purpose:
           </label>
           <input
             placeholder="enter your purpose 🌍"
@@ -253,7 +253,7 @@ const Home = () => {
       {currentAction === 7 && (
         <div className="prompt-container">
           <label htmlFor="user-input-goal" className="prompt-label">
-            Goal:
+            Your Fundraising Goal (in $):
           </label>
           <textarea
             placeholder="your goal 🤔"
@@ -273,7 +273,7 @@ const Home = () => {
       {currentAction === 8 && (
         <div className="prompt-container">
           <label htmlFor="user-input-duration" className="prompt-label">
-            Duration:
+            Campaign Duration:
           </label>
           <textarea
             placeholder="your duration 🤔"
@@ -293,7 +293,7 @@ const Home = () => {
       {currentAction === 9 && (
         <div className="prompt-container">
           <label htmlFor="user-input-channel" className="prompt-label">
-            Channel Type:
+            Your Communication Channel Type:
           </label>
           <textarea
             placeholder="your channel 🤔"
@@ -313,7 +313,7 @@ const Home = () => {
       {currentAction === 10 && (
         <div className="prompt-container">
           <label htmlFor="user-input-focus" className="prompt-label">
-            Focus:
+            Your Campaign's focus:
           </label>
           <textarea
             placeholder="your focus 🤔"
