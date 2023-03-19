@@ -82,7 +82,7 @@ const Home = () => {
   return (
     <div className="root">
       <Head>
-        <title>GPT-3 Writer</title>
+        <title>Campaign Writer</title>
       </Head>
       <div className="container">
         <div className="header">
