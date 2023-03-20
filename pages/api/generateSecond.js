@@ -9,10 +9,16 @@ const openai = new OpenAIApi(configuration);
 const generateSecond = async (req, res) => {
   // I build Prompt #2.
   const secondPrompt = `Take the context of the organization ${req.body.context}
-  We have a goal of raising ${req.body.goal} in the duration of ${req.body.duration}. 
-  We only have ${req.body.channelType} as a communication channel. Focus of the campaign must be on ${req.body.focus}.
+  We have a goal of raising ${req.body.goal} in the duration of ${
+    req.body.duration
+  }. 
+  We only have SMS as a communication channel. Focus of the campaign must be on ${
+    req.body.focus
+  }.
   Can you create a template campaign to help us reach this goal? 
-  Make the campaign aspirational and provide examples of all 8 sms.
+  Make the campaign aspirational and provide examples of all ${
+    req.body.duration * 2
+  } sms.
   `;
 
   // I call the OpenAI API a second time with Prompt #2

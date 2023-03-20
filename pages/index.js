@@ -17,18 +17,31 @@ const Home = () => {
   const [duration, setDuration] = useState("");
   const [channelType, setChannelType] = useState("");
   const [focus, setFocus] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   // added a new state variable to store the updated output
   const [updatedApiOutput, setUpdatedApiOutput] = useState("");
 
   const goToNextStep = () => {
     const link = document.querySelector(".campaign a");
+    const inputs = document.querySelectorAll(".prompt-box");
 
-    if (link !== null) {
-      link.remove();
+    // check if all required fields have been filled
+    const isValid = Array.from(inputs).every((input) => input.checkValidity());
+
+    if (!isValid) {
+      setErrorMessage("Please fill in all required fields.");
+    } else {
+      setErrorMessage("");
     }
 
-    setCurrentAction(currentAction + 1);
+    if (isValid) {
+      if (link !== null) {
+        link.remove();
+      }
+
+      setCurrentAction(currentAction + 1);
+    }
   };
 
   const callGenerateEndpoint = async () => {
@@ -72,7 +85,6 @@ const Home = () => {
         context: `${apiOutput}`,
         goal: `${goal}`,
         duration: `${duration}`,
-        channelType: `${channelType}`,
         focus: `${focus}`,
       }),
     });
@@ -111,7 +123,9 @@ const Home = () => {
             id="user-input-email"
             className="prompt-box"
             value={email}
+            type="email"
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
           <div className="prompt-buttons">
             <a className="generate-button" onClick={goToNextStep}>
@@ -131,6 +145,7 @@ const Home = () => {
             id="user-input-location"
             className="prompt-box"
             value={location}
+            required
             onChange={(e) => setLocation(e.target.value)}
           />
           <div className="prompt-buttons">
@@ -151,6 +166,7 @@ const Home = () => {
             id="user-input-nonprofit"
             className="prompt-box"
             value={nonProfitName}
+            required
             onChange={(e) => setNonProfitName(e.target.value)}
           />
           <div className="prompt-buttons">
@@ -160,6 +176,8 @@ const Home = () => {
           </div>
         </div>
       )}
+
+      {errorMessage && <div className="error-message">{errorMessage}</div>}
 
       {currentAction === 4 && (
         <div className="prompt-container">
@@ -171,6 +189,7 @@ const Home = () => {
             id="user-input-range"
             className="prompt-box"
             value={revenueRange}
+            required
             onChange={(e) => setRevenueRange(e.target.value)}
           />
           <div className="prompt-buttons">
@@ -191,6 +210,7 @@ const Home = () => {
             id="user-input-purpose"
             className="prompt-box"
             value={purpose}
+            required
             onChange={(e) => setPurpose(e.target.value)}
           />
           <div className="prompt-buttons">
@@ -206,11 +226,12 @@ const Home = () => {
           <label htmlFor="user-input" className="prompt-label">
             Current activities of the non-profit:
           </label>
-          <textarea
+          <input
             placeholder="enter your current activities here 🤔"
             id="user-input"
             className="prompt-box"
             value={activities}
+            required
             onChange={(e) => setActivities(e.target.value)}
           />
           <div className="prompt-buttons">
@@ -255,11 +276,12 @@ const Home = () => {
           <label htmlFor="user-input-goal" className="prompt-label">
             Your Fundraising Goal (in $):
           </label>
-          <textarea
+          <input
             placeholder="your goal 🤔"
             id="user-input-goal"
             className="prompt-box"
             value={goal}
+            required
             onChange={(e) => setGoal(e.target.value)}
           />
           <div className="prompt-buttons">
@@ -273,13 +295,16 @@ const Home = () => {
       {currentAction === 8 && (
         <div className="prompt-container">
           <label htmlFor="user-input-duration" className="prompt-label">
-            Campaign Duration:
+            Campaign Duration (in weeks):
           </label>
-          <textarea
+          <input
             placeholder="your duration 🤔"
             id="user-input-duration"
             className="prompt-box"
+            type="number"
             value={duration}
+            required
+            min="0"
             onChange={(e) => setDuration(e.target.value)}
           />
           <div className="prompt-buttons">
@@ -292,45 +317,28 @@ const Home = () => {
 
       {currentAction === 9 && (
         <div className="prompt-container">
-          <label htmlFor="user-input-channel" className="prompt-label">
-            Your Communication Channel Type:
-          </label>
-          <textarea
-            placeholder="your channel 🤔"
-            id="user-input-channel"
-            className="prompt-box"
-            value={duration}
-            onChange={(e) => setDuration(e.target.value)}
-          />
-          <div className="prompt-buttons">
-            <a className="generate-button" onClick={goToNextStep}>
-              Next
-            </a>
-          </div>
-        </div>
-      )}
-
-      {currentAction === 10 && (
-        <div className="prompt-container">
           <label htmlFor="user-input-focus" className="prompt-label">
             Your Campaign's focus:
           </label>
-          <textarea
+          <input
             placeholder="your focus 🤔"
             id="user-input-focus"
             className="prompt-box"
             value={focus}
+            required
             onChange={(e) => setFocus(e.target.value)}
           />
           <div className="prompt-buttons">
             <a
               className={
-                isGenerating ? "generate-button loading" : "generate-button"
+                isCampaignGenerating
+                  ? "generate-button loading"
+                  : "generate-button"
               }
               onClick={callUpdateEndpoint}
             >
               <div className="generate">
-                {isGenerating ? (
+                {isCampaignGenerating ? (
                   <span className="loader"></span>
                 ) : (
                   <p>Submit</p>

@@ -10,7 +10,7 @@ body {
     display: flex;
     place-content: center flex-start;
     align-items: center;
-    background-color: rgb(0, 0, 0);
+    background-color: rgba(67, 81, 101, 255);
     flex-flow: column nowrap;
     gap: 10px;
     height: 100vh;
@@ -46,6 +46,10 @@ body {
 .header-title {
     display: flex;
     gap: 12px;
+}
+
+.error-message {
+    color: red;
 }
 
 .header-title h1 {
@@ -88,7 +92,7 @@ body {
 
 .prompt-box {
     border-bottom-width: 1px;
-    border-color: rgba(255, 255, 255, 0.1);
+    border-color: white;
     border-left-width: 1px;
     border-right-width: 1px;
     border-style: solid;
@@ -180,7 +184,7 @@ textarea {
 .generate-button {
     place-content: flex-start;
     align-items: flex-start;
-    background-color: rgb(255, 79, 18);
+    background-color: rgb(4,148,220);
     border-radius: 100px;
     display: flex;
     flex: 0 0 auto;
@@ -192,6 +196,7 @@ textarea {
     position: relative;
     text-decoration: none;
     width: min-content;
+    color: white;
     will-change: transform;
     cursor: pointer;
 }
