@@ -138,7 +138,7 @@ const Home = () => {
       {currentAction === 2 && (
         <div className="prompt-container">
           <label htmlFor="user-input-location" className="prompt-label">
-            Company's Location:
+            Company's Location (City, Country):
           </label>
           <input
             placeholder="enter your location 🌍"
@@ -255,14 +255,6 @@ const Home = () => {
 
       {!isGenerating && apiOutput && (
         <div className="output">
-          <div className="output-header-container">
-            <div className="output-header">
-              <h3>Details of your Organisation</h3>
-            </div>
-          </div>
-          <div className="output-content">
-            <p>{apiOutput}</p>
-          </div>
           <div className="prompt-buttons campaign">
             <a className="generate-button campaign" onClick={goToNextStep}>
               Create a Campaign
