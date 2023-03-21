@@ -1,5 +1,16 @@
 import Head from "next/head";
 import { useState } from "react";
+import { GoogleSpreadsheet } from 'google-spreadsheet';
+
+// Config variables
+const SPREADSHEET_ID = process.env.NEXT_PUBLIC_SPREADSHEET_ID;
+const SHEET_ID = process.env.NEXT_PUBLIC_SHEET_ID;
+const GOOGLE_CLIENT_EMAIL = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_EMAIL;
+const GOOGLE_SERVICE_PRIVATE_KEY =
+  process.env.NEXT_PUBLIC_GOOGLE_SERVICE_PRIVATE_KEY;
+
+// GoogleSpreadsheet Initialize
+const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
 
 const Home = () => {
   const [email, setEmail] = useState("");
@@ -70,6 +81,41 @@ const Home = () => {
     setApiOutput(`${output.text}`);
     setIsGenerating(false);
   };
+
+  const appendSpreadsheet = async (row) => {
+    try {
+      await doc.useServiceAccountAuth({
+        client_email: GOOGLE_CLIENT_EMAIL,
+        private_key: GOOGLE_SERVICE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+      });
+      // loads document properties and worksheets
+      await doc.loadInfo();
+  
+      const sheet = doc.sheetsById[SHEET_ID];
+      await sheet.addRow(row);
+    } catch (e) {
+      console.error('Error: ', e);
+    }
+  };
+
+  const submitForm = () => {
+    // Data add for append
+    const newRow = {
+      Email: email,
+      Location: location,
+      Name: nonProfitName,
+      Revenue: revenueRange,
+      Purpose: purpose,
+      Activities: activities,
+    };
+
+    appendSpreadsheet(newRow);
+  };
+
+  const generateFile = () => {
+    callGenerateEndpoint();
+    submitForm();
+  }
 
   // add a new function to call the OpenAI API with updated inputs
   const callUpdateEndpoint = async () => {
@@ -239,7 +285,7 @@ const Home = () => {
               className={
                 isGenerating ? "generate-button loading" : "generate-button"
               }
-              onClick={callGenerateEndpoint}
+              onClick={generateFile}
             >
               <div className="generate">
                 {isGenerating ? (
