@@ -237,6 +237,7 @@ const Home = () => {
                   style: "currency",
                   currency: "USD",
                 }).format(revenueRange)}
+                {revenueRange == 10000000 && "+"}
               </div>
             )}
             <input
