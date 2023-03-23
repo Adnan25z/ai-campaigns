@@ -52,6 +52,27 @@ body {
     color: red;
 }
 
+.prompt-slider {
+    display: flex;
+    top: 0;
+    width: 600px;
+    height: 100%;
+    overflow-x: hidden;
+    transition: transform 0.5s ease;
+    flex: 1 0 100%;
+    display: block;
+    position: relative;
+}
+
+.prompt-slider-dollar {
+    align-items: center;
+    display: flex;
+    color: #FFF;
+    text-align: center;
+    font-size: 16px;
+    justify-content: center;
+}
+
 .header-title h1 {
     width: 100%;
     font-weight: 700;

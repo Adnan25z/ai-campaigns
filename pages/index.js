@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useState } from "react";
-import { GoogleSpreadsheet } from 'google-spreadsheet';
+import { GoogleSpreadsheet } from "google-spreadsheet";
 
 // Config variables
 const SPREADSHEET_ID = process.env.NEXT_PUBLIC_SPREADSHEET_ID;
@@ -86,15 +86,15 @@ const Home = () => {
     try {
       await doc.useServiceAccountAuth({
         client_email: GOOGLE_CLIENT_EMAIL,
-        private_key: GOOGLE_SERVICE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+        private_key: GOOGLE_SERVICE_PRIVATE_KEY.replace(/\\n/g, "\n"),
       });
       // loads document properties and worksheets
       await doc.loadInfo();
-  
+
       const sheet = doc.sheetsById[SHEET_ID];
       await sheet.addRow(row);
     } catch (e) {
-      console.error('Error: ', e);
+      console.error("Error: ", e);
     }
   };
 
@@ -115,7 +115,7 @@ const Home = () => {
   const generateFile = () => {
     callGenerateEndpoint();
     submitForm();
-  }
+  };
 
   // add a new function to call the OpenAI API with updated inputs
   const callUpdateEndpoint = async () => {
@@ -230,14 +230,19 @@ const Home = () => {
           <label htmlFor="user-input-range" className="prompt-label">
             Your Annual Revenue:
           </label>
-          <input
-            placeholder="enter your revenue range 🌍"
-            id="user-input-range"
-            className="prompt-box"
-            value={revenueRange}
-            required
-            onChange={(e) => setRevenueRange(e.target.value)}
-          />
+          <div className="prompt-slider-value">
+            <div className="prompt-slider-dollar">${revenueRange}</div>
+            <input
+              type="range"
+              min="0"
+              max="1000000"
+              step="5000"
+              value={revenueRange}
+              className="prompt-slider"
+              id="user-input-range"
+              onChange={(e) => setRevenueRange(e.target.value)}
+            />
+          </div>
           <div className="prompt-buttons">
             <a className="generate-button" onClick={goToNextStep}>
               Next
