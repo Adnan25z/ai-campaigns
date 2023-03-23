@@ -12,10 +12,10 @@ body {
     align-items: center;
     background-color: rgba(67, 81, 101, 255);
     flex-flow: column nowrap;
-    gap: 10px;
+    gap: 16px;
     height: 100vh;
     overflow: auto;
-    padding: 0px;
+    padding: 0;
     position: relative;
 }
 
@@ -25,7 +25,7 @@ body {
     align-items: center;
     flex: 0 0 auto;
     flex-flow: column nowrap;
-    gap: 10px;
+    gap: 16px;
     height: fit-content;
     max-width: 975px;
     overflow: auto;
@@ -52,17 +52,6 @@ body {
     color: red;
 }
 
-.prompt-slider {
-    display: flex;
-    top: 0;
-    width: 600px;
-    height: 100%;
-    overflow-x: hidden;
-    transition: transform 0.5s ease;
-    flex: 1 0 100%;
-    display: block;
-    position: relative;
-}
 
 .prompt-slider-dollar {
     align-items: center;
@@ -130,7 +119,7 @@ body {
     overflow: hidden;
     padding: 20px;
     position: relative;
-    max-width: 1200px;
+    min-width: 120px;
     will-change: transform;
     overflow: auto;
     outline: none;
@@ -143,6 +132,26 @@ body {
     color: rgba(255, 255, 255, 0.75);
     text-decoration: none;
     text-transform: none;
+}
+
+.prompt-slider {
+    display: flex;
+    top: 0;
+    width: 100%;
+    min-width: 120px;
+    position: relative;
+    border-radius: 8px;
+    padding: 16px;
+    transition: transform 0.5s ease;
+}
+
+@media (min-width: 768px) {
+    .prompt-slider {
+        min-width: 600px;
+    }
+    .prompt-box {
+        min-width: 600px;
+    }
 }
 
 textarea {
