@@ -232,7 +232,12 @@ const Home = () => {
           </label>
           <div className="prompt-slider-value">
             {revenueRange && (
-              <div className="prompt-slider-dollar">${revenueRange}</div>
+              <div className="prompt-slider-dollar">
+                {new Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                }).format(revenueRange)}
+              </div>
             )}
             <input
               type="range"
