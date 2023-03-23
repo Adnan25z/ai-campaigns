@@ -231,11 +231,13 @@ const Home = () => {
             Your Annual Revenue:
           </label>
           <div className="prompt-slider-value">
-            <div className="prompt-slider-dollar">${revenueRange}</div>
+            {revenueRange && (
+              <div className="prompt-slider-dollar">${revenueRange}</div>
+            )}
             <input
               type="range"
               min="0"
-              max="1000000"
+              max="10000000"
               step="5000"
               value={revenueRange}
               className="prompt-slider"
